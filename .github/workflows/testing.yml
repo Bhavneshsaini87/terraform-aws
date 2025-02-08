@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -27,21 +27,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1  # Replace with your preferred AWS region
 
-          
-     - name: Format Terraform Files
-       run: terraform fmt -write=true
-
-        
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: latest
+          terraform_version: 1.5.0  # Specify the version you want to use
+
+      - name: Format Terraform Files
+        run: terraform fmt -write=true
 
       - name: Terraform Format Check
         run: terraform fmt -check
-        
-      - name: Terraform Format Write
-        run: terraform fmt -write=true
 
       - name: Terraform Init
         run: terraform init
